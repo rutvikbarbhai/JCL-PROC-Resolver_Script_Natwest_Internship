@@ -1,0 +1,28 @@
+//PCNE1D5W JOB CLASS=N,MSGCLASS=Y,USER=NWB
+//* RUN THROUGH JCLCHECK ON 16/09/24 AT 07:27:19 BY LAKSA FOR PFOS
+//SETVAR   SET ID=PN,BNK=N,TLQ=
+//JCLLIB   JCLLIB ORDER=(PGOS.&TLQ.BASE.PROCLIB)
+//*
+//@U11RMS  EXEC @U11RMS,CODE=@P
+//*
+//JSTEP010 EXEC PC#E1D1W,PID=05,RUN=R,SID=S05,
+//          STY=01
+//*
+//@U11END  EXEC @U11RMS,CODE=9N
+
+//PC#E1D1W PROC DAYFREQ=00,          * DAYFREQ
+//              DB2INCL=@QDB2DSN,    * INCLUDE MEMBER FOR DB2
+//              DCLAS=DSIZE10,       * SPACE ALLOCATION
+//              GENDAT=(0),          * GENDAT
+//              GENOUT=(+1),         * OUTPUT GENERATION
+//         LOADPC=PGPC.&TLQ..BASE.LOAD,  * PC LOAD LIBRARY
+//              PID=,
+//              PLAN=&BNK.PCBAT,     * DB2 PLAN
+//              PROG=PCE019,         * PROG
+//              RUN=,
+//              RUNID=M,             * RUN ID
+//              SID=,
+//              SSID=DPA0,           * DB2 SUBSYSTEM
+//              STY=                *
+//* RUN THROUGH JCLPREP ON 19/07/2007 AT 08:49:59 BY FOXPC FOR PJOS
+//*
