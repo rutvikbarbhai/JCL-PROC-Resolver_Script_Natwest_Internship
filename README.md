@@ -2,16 +2,8 @@
 
 ### *From fragmented JCL → resolved, traceable execution flow.*
 
-<p align="center">
-  <img src="https://img.shields.io/badge/IBM%20Mainframe-JCL-blue?style=for-the-badge&logo=ibm" />
-  <img src="https://img.shields.io/badge/Python-Automation-yellow?style=for-the-badge&logo=python" />
-  <img src="https://img.shields.io/badge/Domain-Banking%20Technology-5B2C83?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/Project-NatWest%20Internship-6B2D5C?style=for-the-badge" />
-</p>
+A Python-based utility for processing, merging and resolving fragmented JCL / PROC definitions
 
-<p align="center">
-  <b>A Python-based utility for processing, merging and resolving fragmented JCL / PROC definitions.</b>
-</p>
 
 ---
 
