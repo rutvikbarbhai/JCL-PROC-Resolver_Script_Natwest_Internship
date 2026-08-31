@@ -2,8 +2,6 @@
 
 ### *From fragmented JCL → resolved, traceable execution flow.*
 
-A Python-based utility for processing, merging and resolving fragmented JCL / PROC definitions
-
 
 ---
 
