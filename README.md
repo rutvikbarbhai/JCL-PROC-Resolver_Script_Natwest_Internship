@@ -1,69 +1,203 @@
-# ⚙️ JCL PROC Resolver For Main Frame Computers Automation 
+# ⚙️ JCL PROC Resolver — Mainframe Automation
 
+<p align="center">
+  <strong>Automating JCL fragment aggregation and PROC resolution for mainframe workflows.</strong>
+</p>
 
+<p align="center">
+
+<img src="https://img.shields.io/badge/Python-Automation-blue?style=for-the-badge&logo=python" />
+<img src="https://img.shields.io/badge/Mainframe-JCL-orange?style=for-the-badge" />
+<img src="https://img.shields.io/badge/NatWest-Internship-purple?style=for-the-badge" />
+
+</p>
 
 ---
 
-## 🧭 The Problem
+## 🧭 Overview
 
-Mainframe workloads can contain large JCL flows where procedures, job steps and definitions are distributed across multiple files.
+Mainframe applications often contain large **JCL (Job Control Language)** workflows where job steps, procedures and definitions are distributed across multiple files and directories.
 
-When these fragments are viewed independently, understanding the **actual execution structure** can become difficult.
+When these files are inspected individually, understanding the **actual execution flow** can become difficult and time-consuming.
 
-This project approaches the problem as a simple pipeline:
+This project explores a Python-based approach to:
+
+* 📂 Discover and collect JCL fragments
+* 🔗 Combine related file fragments
+* 🧩 Identify and work with `PROC` definitions
+* 🔍 Resolve procedure references
+* 📝 Generate consolidated output
+* 🧪 Validate the resulting structure
+* 📊 Improve traceability between source and processed files
+
+### The core idea
 
 ```text
-                 ┌──────────────────────┐
-                 │   Fragmented JCL      │
-                 │   + PROC definitions  │
-                 └──────────┬───────────┘
-                            │
-                            ▼
-                 ┌──────────────────────┐
-                 │   File Discovery     │
-                 │   & Collection       │
-                 └──────────┬───────────┘
-                            │
-                            ▼
-                 ┌──────────────────────┐
-                 │   Merge / Processing  │
-                 │       Logic          │
-                 └──────────┬───────────┘
-                            │
-                            ▼
-                 ┌──────────────────────┐
-                 │    PROC Resolver     │
-                 │   & JCL Structure    │
-                 └──────────┬───────────┘
-                            │
-                            ▼
-                 ┌──────────────────────┐
-                 │  Resolved Output     │
-                 │  + Traceability      │
-                 └──────────────────────┘
+        Fragmented JCL
+        + PROC Definitions
+                │
+                ▼
+       ┌──────────────────┐
+       │ File Discovery    │
+       │ & Collection      │
+       └────────┬─────────┘
+                │
+                ▼
+       ┌──────────────────┐
+       │ Fragment Merging  │
+       │ & Processing      │
+       └────────┬─────────┘
+                │
+                ▼
+       ┌──────────────────┐
+       │ PROC Resolution   │
+       │ & JCL Analysis    │
+       └────────┬─────────┘
+                │
+                ▼
+       ┌──────────────────┐
+       │ Resolved Output   │
+       │ & Traceability    │
+       └──────────────────┘
 ```
 
-The goal is to turn a collection of difficult-to-follow fragments into something that is easier to **inspect, understand and validate**.
+---
+
+# 🎯 Problem Statement
+
+A JCL job may reference procedures that are defined somewhere else.
+
+For example:
+
+```jcl
+//MYJOB    JOB ...
+//STEP01   EXEC PROC=MYPROC
+```
+
+The actual procedure may exist in a separate file:
+
+```jcl
+//MYPROC   PROC
+//STEP01   EXEC PGM=PROGRAM1
+//STEP02   EXEC PGM=PROGRAM2
+//MYPROC   PEND
+```
+
+Manually tracing these relationships across multiple files can become cumbersome.
+
+The purpose of this project is to automate that process and transform fragmented source material into a **more understandable representation of the JCL structure**.
 
 ---
 
-# 🚀 What This Project Does
+# 🚀 What the Project Does
 
-The repository demonstrates a workflow for handling JCL fragments and PROC-related definitions.
+The workflow focuses on four main stages.
 
-### Core capabilities
+### 1. 📂 Collect
 
-* 📂 Process JCL fragments stored across multiple directories
-* 🔗 Combine related file fragments
-* 🧩 Work with JCL `PROC` / procedure definitions
-* 🔍 Resolve relationships between JCL components
-* 📝 Generate processed output for inspection
-* 🧪 Support validation through example inputs and outputs
-* 🖥️ Provide visual evidence of the processing workflow
+Locate JCL fragments distributed across multiple directories.
+
+```text
+folder1/
+├── fragment_A
+├── fragment_B
+└── fragment_C
+
+folder2/
+├── fragment_D
+└── fragment_E
+```
+
+### 2. 🔍 Identify
+
+Inspect the available JCL content and identify relevant components such as:
+
+```text
+JCL
+│
+├── JOB
+├── EXEC
+├── PROC
+└── DD
+```
+
+### 3. 🔗 Merge
+
+Combine related fragments into a consolidated representation.
+
+```text
+Fragment A ─────┐
+Fragment B ─────┼──────► Combined JCL
+Fragment C ─────┘
+```
+
+The repository includes `merge_files.py` as part of this processing workflow.
+
+### 4. 🧩 Resolve
+
+Trace procedure references and connect them with their corresponding definitions.
+
+```text
+JOB
+│
+├── EXEC PROC_A
+│      │
+│      ├── STEP01
+│      ├── STEP02
+│      └── STEP03
+│
+└── EXEC PROC_B
+       │
+       ├── STEP04
+       └── STEP05
+```
+
+The result is a structure that is easier to inspect and reason about.
 
 ---
 
-# 🏗️ Repository Architecture
+# 🧠 Why PROC Resolution?
+
+JCL frequently separates **job invocation** from **procedure implementation**.
+
+A job may contain:
+
+```jcl
+//STEP01 EXEC PROC=PAYPROC
+```
+
+while the implementation is stored elsewhere:
+
+```jcl
+//PAYPROC  PROC
+//PAYSTEP1 EXEC PGM=PAYMENT
+//PAYSTEP2 EXEC PGM=VALIDATE
+//PAYPROC  PEND
+```
+
+A PROC resolver bridges this gap:
+
+```text
+EXEC PROC=PAYPROC
+        │
+        ▼
+   Locate PROC
+        │
+        ▼
+ Read definition
+        │
+        ▼
+ Resolve steps
+        │
+        ▼
+ Generate structure
+```
+
+This helps transform **references into relationships** and isolated files into a more complete execution picture.
+
+---
+
+# 🏗️ Repository Structure
 
 ```text
 JCL-PROC-Resolver_Script_Natwest_Internship/
@@ -73,7 +207,6 @@ JCL-PROC-Resolver_Script_Natwest_Internship/
 │   ├── PCJUB2CW.txt
 │   ├── PCNE1D1W.txt
 │   ├── PCNE1D2W.txt
-│   ├── ...
 │   └── merge_files.py
 │
 ├── 📁 folder2/
@@ -85,7 +218,6 @@ JCL-PROC-Resolver_Script_Natwest_Internship/
 │   ├── PCJUB2CW.txt
 │   ├── PCNE1D1W.txt
 │   ├── PCNE1D2W.txt
-│   ├── ...
 │   └── PCNUB2CW.txt
 │
 ├── 🖼️ File_Fragment_1_Folder1.png
@@ -96,271 +228,20 @@ JCL-PROC-Resolver_Script_Natwest_Internship/
 └── 📄 README.md
 ```
 
-The repository currently contains three primary input folders, sample JCL text files, a Python merge script and screenshots documenting the processing/output flow.
+The repository contains sample JCL fragments, processing scripts and visual evidence demonstrating the workflow.
 
 ---
 
-# 🔬 How It Works
+# 🔬 Example
 
-## 1️⃣ Collect
-
-The resolver starts with JCL fragments distributed across the input directories.
-
-```text
-folder1/
- ├── fragment A
- ├── fragment B
- └── fragment C
-
-folder2/
- ├── fragment D
- └── fragment E
-```
-
----
-
-## 2️⃣ Identify
-
-The processing logic examines the available JCL content and identifies the relevant procedure and job-definition fragments.
-
-```text
-JCL
- │
- ├── JOB
- │
- ├── EXEC
- │
- ├── PROC
- │
- └── DD
-```
-
----
-
-## 3️⃣ Merge
-
-Related fragments can be brought together into a consolidated representation.
-
-```text
-Fragment A ─────┐
-                │
-Fragment B ─────┼──────► Combined JCL
-                │
-Fragment C ─────┘
-```
-
-The repository includes `merge_files.py` as part of this workflow.
-
----
-
-## 4️⃣ Resolve
-
-The important step is moving from isolated definitions to a more complete representation of the JCL/PROC relationship.
-
-```text
-JOB
- │
- ├── EXEC PROC_A
- │       │
- │       ├── STEP01
- │       ├── STEP02
- │       └── STEP03
- │
- └── EXEC PROC_B
-         │
-         ├── STEP04
-         └── STEP05
-```
-
-This makes complex procedure-driven JCL easier to reason about.
-
----
-
-# 🧠 Why PROC Resolution Matters
-
-A JCL job can reference procedures rather than explicitly containing every execution statement.
-
-Conceptually:
-
-```jcl
-//MYJOB    JOB ...
-//STEP01   EXEC PROC=MYPROC
-```
-
-The actual logic may live elsewhere:
-
-```jcl
-//MYPROC   PROC
-//STEP01   EXEC PGM=PROGRAM1
-//STEP02   EXEC PGM=PROGRAM2
-//MYPROC   PEND
-```
-
-A resolver bridges the gap:
-
-```text
-EXEC PROC=MYPROC
-        │
-        ▼
-   Locate PROC
-        │
-        ▼
-   Read definition
-        │
-        ▼
-   Resolve steps
-        │
-        ▼
-   Produce usable structure
-```
-
----
-
-# 🛠️ Technology Stack
-
-| Technology             | Purpose                                        |
-| ---------------------- | ---------------------------------------------- |
-| 🐍 **Python**          | Automation and processing                      |
-| 🖥️ **JCL**            | Mainframe job-control language being processed |
-| 📄 **TXT files**       | JCL / PROC input fragments                     |
-| 🧩 **File Processing** | Combining and manipulating fragments           |
-| 🐙 **Git / GitHub**    | Version control and project collaboration      |
-
----
-
-# 📸 Project Evidence
-
-### Input Fragment — Folder 1
-
-The repository includes an example screenshot showing one of the source fragments.
-
-### Input Fragment — Folder 2
-
-A second fragment demonstrates how the source material can be distributed across different locations.
-
-### Resolved / Combined Result
-
-The resulting screenshot demonstrates the output after processing the fragments.
-
-### Terminal Execution
-
-A terminal screenshot documents the execution workflow.
-
-> These artifacts are intentionally included in the repository to make the transformation process easier to understand visually.
-
----
-
-# 🎯 Project Objectives
-
-The project was designed around several practical engineering goals:
-
-### 01 — Reduce manual inspection
-
-Instead of manually navigating through multiple JCL fragments, automate the collection and processing workflow.
-
-### 02 — Improve traceability
-
-Maintain a clear relationship between source fragments and processed output.
-
-### 03 — Simplify legacy-system analysis
-
-Make complex JCL/PROC relationships easier for engineers to inspect.
-
-### 04 — Build reusable automation
-
-Use Python to automate repetitive mainframe-development tasks.
-
----
-
-# 📊 Conceptual Transformation
-
-```text
-BEFORE
-────────────────────────────────────────────
-
-📄 File A
-   └── JCL fragment
-
-📄 File B
-   └── PROC definition
-
-📄 File C
-   └── Additional steps
-
-📄 File D
-   └── Related definition
-
-
-                    ↓
-              🔧 RESOLVER
-                    ↓
-
-
-AFTER
-────────────────────────────────────────────
-
-┌─────────────────────────────────────────┐
-│              RESOLVED FLOW               │
-├─────────────────────────────────────────┤
-│ JOB                                      │
-│   ├── PROC A                             │
-│   │    ├── STEP 01                       │
-│   │    └── STEP 02                       │
-│   │                                      │
-│   └── PROC B                             │
-│        ├── STEP 03                       │
-│        └── STEP 04                       │
-└─────────────────────────────────────────┘
-```
-
----
-
-# 💡 Engineering Takeaways
-
-This project provided hands-on exposure to an interesting intersection of:
-
-**Python Automation × Mainframe Technology × Legacy Code Analysis**
-
-Key areas explored include:
-
-* JCL structure and syntax
-* PROC-based execution
-* File parsing
-* Fragment aggregation
-* Automation of repetitive workflows
-* Input/output validation
-* Debugging and terminal-based execution
-* Working with legacy-oriented enterprise systems
-
----
-
-# 🔮 Future Improvements
-
-Potential extensions could include:
-
-* [ ] 🔍 Automated PROC dependency graph generation
-* [ ] 🌳 Visual JCL execution-tree generation
-* [ ] 📊 Structured JSON output
-* [ ] ⚡ Parallel processing for large JCL repositories
-* [ ] 🧪 Automated unit and integration tests
-* [ ] 🖥️ Web-based JCL visualisation
-* [ ] 🚨 Better error reporting for unresolved PROCs
-* [ ] 📈 Processing and performance metrics
-* [ ] 🔄 CI/CD integration
-* [ ] 📚 Automated documentation generation
-
----
-
-# 🧪 Example Concept
-
-Given:
+### Input JCL
 
 ```jcl
 //JOB001   JOB ...
 //STEP01   EXEC PROC=PAYPROC
 ```
 
-and a PROC definition:
+### PROC Definition
 
 ```jcl
 //PAYPROC  PROC
@@ -369,39 +250,195 @@ and a PROC definition:
 //PAYPROC  PEND
 ```
 
-the conceptual resolved representation becomes:
+### Resolved Representation
 
 ```text
 JOB001
- │
- └── STEP01
-      │
-      └── PAYPROC
-           ├── PAYSTEP1 → PAYMENT
-           └── PAYSTEP2 → VALIDATE
+│
+└── STEP01
+     │
+     └── PAYPROC
+          ├── PAYSTEP1 → PAYMENT
+          └── PAYSTEP2 → VALIDATE
 ```
 
-That is the central idea behind a **JCL PROC Resolver**:
+Instead of manually navigating between the job and its procedure definition, the relationship becomes immediately visible.
 
-> **Turn references into relationships.
-> Turn fragments into structure.
-> Turn complexity into clarity.**
+---
+
+# 📊 Before vs After
+
+### BEFORE — Fragmented
+
+```text
+📄 File A
+└── JCL fragment
+
+📄 File B
+└── PROC definition
+
+📄 File C
+└── Additional steps
+
+📄 File D
+└── Related definition
+```
+
+⬇️
+
+### AFTER — Resolved
+
+```text
+┌─────────────────────────────────────┐
+│           RESOLVED JCL FLOW         │
+├─────────────────────────────────────┤
+│ JOB                                 │
+│  │                                  │
+│  ├── PROC A                         │
+│  │    ├── STEP 01                  │
+│  │    └── STEP 02                  │
+│  │                                  │
+│  └── PROC B                         │
+│       ├── STEP 03                  │
+│       └── STEP 04                  │
+└─────────────────────────────────────┘
+```
+
+---
+
+# 🛠️ Technology Stack
+
+| Technology             | Purpose                                |
+| ---------------------- | -------------------------------------- |
+| 🐍 **Python**          | Automation and file processing         |
+| 🖥️ **JCL**            | Mainframe job-control language         |
+| 📄 **TXT**             | JCL and PROC source fragments          |
+| 🔗 **File Processing** | Fragment aggregation and manipulation  |
+| 🐙 **Git / GitHub**    | Version control and project management |
+
+---
+
+# 🎯 Project Objectives
+
+The project was developed around several practical engineering objectives.
+
+### 01 — Reduce Manual Inspection
+
+Automate repetitive navigation and processing of JCL fragments.
+
+### 02 — Improve Traceability
+
+Maintain a clear connection between source fragments and generated output.
+
+### 03 — Simplify Legacy-System Analysis
+
+Make relationships between jobs, procedures and execution steps easier to understand.
+
+### 04 — Explore Automation Opportunities
+
+Apply Python scripting to a workflow involving established enterprise/mainframe technologies.
+
+---
+
+# 📸 Project Evidence
+
+The repository includes screenshots demonstrating different stages of the workflow:
+
+### 📂 Source Fragments
+
+Examples of JCL fragments distributed across separate directories.
+
+### 🔗 Combined Output
+
+Evidence of the fragments being processed into a consolidated representation.
+
+### 🖥️ Terminal Execution
+
+Screenshots documenting the execution of the processing workflow.
+
+These artifacts provide visual context for how the input files are transformed during processing.
+
+---
+
+# 🧪 Validation
+
+The workflow can be validated by comparing:
+
+```text
+Source Fragments
+       │
+       ▼
+   Processing
+       │
+       ▼
+Resolved Output
+       │
+       ▼
+Structural Validation
+```
+
+The objective is to ensure that relevant JCL and PROC relationships are preserved during processing.
+
+---
+
+# 💡 Engineering Learnings
+
+This project provided practical exposure to the intersection of:
+
+```text
+Python Automation
+        ×
+Mainframe Technology
+        ×
+Legacy Code Analysis
+```
+
+Key areas explored include:
+
+* JCL structure and syntax
+* `PROC` definitions and references
+* File parsing and manipulation
+* Fragment aggregation
+* Automation of repetitive workflows
+* Input/output validation
+* Debugging
+* Terminal-based execution
+* Working with legacy-oriented enterprise systems
+
+---
+
+# 🔮 Future Improvements
+
+The current workflow could be extended with:
+
+* [ ] 🔍 Automated PROC dependency graphs
+* [ ] 🌳 Visual JCL execution trees
+* [ ] 📊 Structured JSON output
+* [ ] ⚡ Parallel processing for larger repositories
+* [ ] 🧪 Automated unit and integration tests
+* [ ] 🖥️ Web-based JCL visualization
+* [ ] 🚨 Improved unresolved-PROC error reporting
+* [ ] 📈 Processing and performance metrics
+* [ ] 🔄 CI/CD integration
+* [ ] 📚 Automated documentation generation
 
 ---
 
 # 🏦 Internship Context
 
-This project was developed as part of my **NatWest internship experience**, with a focus on understanding and automating workflows involving enterprise/mainframe technologies.
+This project was developed during my **NatWest internship**, providing practical experience with enterprise technologies and mainframe-oriented workflows.
 
-It represents practical exploration of how modern scripting and automation techniques can be applied to existing enterprise systems.
+The project explores how modern scripting and automation techniques can be applied to improve the analysis and processing of existing enterprise systems.
 
 ---
 
 # 👨‍💻 Author
 
-### Rutvik Barbhai
-
 <p align="center">
+
+<strong>Rutvik Barbhai</strong>
+
+<br><br>
 
 <a href="https://github.com/rutvikbarbhai">
   <img src="https://img.shields.io/badge/GitHub-rutvikbarbhai-black?style=for-the-badge&logo=github" />
@@ -411,20 +448,16 @@ It represents practical exploration of how modern scripting and automation techn
 
 ---
 
-# ⭐ If You Found This Interesting
+# ⭐ Final Thought
 
-Feel free to explore the repository, inspect the JCL fragments, follow the processing workflow and experiment with the resolver.
-
-<p align="center">
-
-### ⚙️ JCL in → 🔍 Resolution → 🧩 Structure out
-
-**Built to make legacy complexity easier to understand.**
-
-</p>
-
----
+> **Turn references into relationships.**
+> **Turn fragments into structure.**
+> **Turn complexity into clarity.**
 
 <p align="center">
-  <sub>Built with Python • JCL • Curiosity • Automation</sub>
+
+### ⚙️ JCL In → 🔍 Resolve → 🧩 Structure Out
+
+<strong>Built with Python • JCL • Automation • Curiosity</strong>
+
 </p>
