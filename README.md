@@ -75,11 +75,11 @@ The purpose of this project is to automate that process and transform fragmented
 
 ---
 
-# 🚀 What the Project Does
+# <img src="https://github.com/user-attachments/assets/9f0497b8-78b3-4d64-8e7f-ace469c4fe70" alt="features icon" width="30" style="vertical-align:middle;"/>  What the Project Does
 
 The workflow focuses on four main stages.
 
-### 1. 📂 Collect
+### 1️⃣ Collect
 
 Locate JCL fragments distributed across multiple directories.
 
@@ -94,7 +94,7 @@ folder2/
 └── fragment_E
 ```
 
-### 2. 🔍 Identify
+### 2️⃣ Identify
 
 Inspect the available JCL content and identify relevant components such as:
 
@@ -107,7 +107,7 @@ JCL
 └── DD
 ```
 
-### 3. 🔗 Merge
+### 3️⃣ Merge
 
 Combine related fragments into a consolidated representation.
 
@@ -119,7 +119,7 @@ Fragment C ─────┘
 
 The repository includes `merge_files.py` as part of this processing workflow.
 
-### 4. 🧩 Resolve
+### 4. <img src="https://github.com/user-attachments/assets/f03f321f-8340-452b-b82a-33f487bb52a4" width="24" style="vertical-align: text-bottom;"/>  Resolve
 
 Trace procedure references and connect them with their corresponding definitions.
 
@@ -281,30 +281,30 @@ Instead of manually navigating between the job and its procedure definition, the
 │ JOB                                 │
 │  │                                  │
 │  ├── PROC A                         │
-│  │    ├── STEP 01                  │
-│  │    └── STEP 02                  │
+│  │    ├── STEP 01                   │
+│  │    └── STEP 02                   │
 │  │                                  │
 │  └── PROC B                         │
-│       ├── STEP 03                  │
-│       └── STEP 04                  │
+│       ├── STEP 03                   │
+│       └── STEP 04                   │
 └─────────────────────────────────────┘
 ```
 
 ---
 
-# 🛠️ Technology Stack
+# <img src="https://github.com/user-attachments/assets/612137fd-b2de-411c-acd7-f94c4811e9f2" height="30px" style="vertical-align:text-bottom;"> Technology Stack
 
 | Technology             | Purpose                                |
 | ---------------------- | -------------------------------------- |
 | 🐍 **Python**          | Automation and file processing         |
-| 🖥️ **JCL**            | Mainframe job-control language         |
+| 🖥️ **JCL**             | Mainframe job-control language         |
 | 📄 **TXT**             | JCL and PROC source fragments          |
 | 🔗 **File Processing** | Fragment aggregation and manipulation  |
 | 🐙 **Git / GitHub**    | Version control and project management |
 
 ---
 
-# 🎯 Project Objectives
+# <img src="https://github.com/user-attachments/assets/d3a7713c-0fa3-4fba-a8b3-1cb60e4dafce"  height="25px" style="position: bottom;"> Project Objectives
 
 The project was developed around several practical engineering objectives.
 
@@ -324,7 +324,7 @@ Make relationships between jobs, procedures and execution steps easier to unders
 
 Apply Python scripting to a workflow involving established enterprise/mainframe technologies.
 
----
+
 
 # 📸 Project Evidence
 
@@ -344,7 +344,6 @@ Screenshots documenting the execution of the processing workflow.
 
 These artifacts provide visual context for how the input files are transformed during processing.
 
----
 
 # 🧪 Validation
 
@@ -408,15 +407,14 @@ The current workflow could be extended with:
 * [ ] 🔄 CI/CD integration
 * [ ] 📚 Automated documentation generation
 
----
+
 
 # 🏦 Internship Context
 
 This project was developed during my **NatWest internship**, providing practical experience with enterprise technologies and mainframe-oriented workflows.
-
 The project explores how modern scripting and automation techniques can be applied to improve the analysis and processing of existing enterprise systems.
 
----
+
 
 # 👨‍💻 Author
 
@@ -432,17 +430,7 @@ The project explores how modern scripting and automation techniques can be appli
 
 </p>
 
----
 
-# ⭐ Final Thought
-
-> **Turn references into relationships.**
-> **Turn fragments into structure.**
-> **Turn complexity into clarity.**
-
-<p align="center">
-
-### ⚙️ JCL In → 🔍 Resolve → 🧩 Structure Out
 
 <strong>Built with Python • JCL • Automation • Curiosity</strong>
 
