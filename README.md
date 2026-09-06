@@ -1,18 +1,4 @@
-# ⚙️ JCL PROC Resolver — Mainframe Automation
-
-<p align="center">
-  <strong>Automating JCL fragment aggregation and PROC resolution for mainframe workflows.</strong>
-</p>
-
-<p align="center">
-
-<img src="https://img.shields.io/badge/Python-Automation-blue?style=for-the-badge&logo=python" />
-<img src="https://img.shields.io/badge/Mainframe-JCL-orange?style=for-the-badge" />
-<img src="https://img.shields.io/badge/NatWest-Internship-purple?style=for-the-badge" />
-
-</p>
-
----
+# <img src="https://github.com/user-attachments/assets/6672ee8c-15ed-4fb5-9cd5-63c04ac747c1" height="30px" style="vertical-align:bottom;">  JCL PROC Resolver & Mainframe Automation
 
 ## 🧭 Overview
 
@@ -30,7 +16,7 @@ This project explores a Python-based approach to:
 * 🧪 Validate the resulting structure
 * 📊 Improve traceability between source and processed files
 
-### The core idea
+### <img src="https://github.com/user-attachments/assets/dcdcffb4-c4e2-40ee-84cc-aca8612d257e" width="24px"> JCL PROC Resolution & Mainframe Automation Pipeline
 
 ```text
         Fragmented JCL
@@ -38,32 +24,32 @@ This project explores a Python-based approach to:
                 │
                 ▼
        ┌──────────────────┐
-       │ File Discovery    │
-       │ & Collection      │
+       │ File Discovery   │
+       │ & Collection     │
        └────────┬─────────┘
                 │
                 ▼
        ┌──────────────────┐
-       │ Fragment Merging  │
-       │ & Processing      │
+       │ Fragment Merging │
+       │ & Processing     │
        └────────┬─────────┘
                 │
                 ▼
        ┌──────────────────┐
-       │ PROC Resolution   │
-       │ & JCL Analysis    │
+       │ PROC Resolution  │
+       │ & JCL Analysis   │
        └────────┬─────────┘
                 │
                 ▼
        ┌──────────────────┐
-       │ Resolved Output   │
-       │ & Traceability    │
+       │ Resolved Output  │
+       │ & Traceability   │
        └──────────────────┘
 ```
 
 ---
 
-# 🎯 Problem Statement
+# <img src="https://github.com/user-attachments/assets/d3a7713c-0fa3-4fba-a8b3-1cb60e4dafce"  height="25px" style="position: bottom;"> Problem Statement
 
 A JCL job may reference procedures that are defined somewhere else.
 
