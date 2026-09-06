@@ -416,21 +416,6 @@ The project explores how modern scripting and automation techniques can be appli
 
 
 
-# 👨‍💻 Author
-
-<p align="center">
-
-<strong>Rutvik Barbhai</strong>
-
-<br><br>
-
-<a href="https://github.com/rutvikbarbhai">
-  <img src="https://img.shields.io/badge/GitHub-rutvikbarbhai-black?style=for-the-badge&logo=github" />
-</a>
-
-</p>
-
-
 
 <strong>Built with Python • JCL • Automation • Curiosity</strong>
 
